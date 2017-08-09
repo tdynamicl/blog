@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+<link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../assets/css/common.css" />
+<script type="text/javascript" src="../static/jquery/jquery-3.1.1.min.js" ></script>
+<script type="text/javascript" src="../static/bootstrap/js/bootstrap.min.js" ></script>
+<script type="text/javascript" src="../static/kindeditor/kindeditor-all-min.js" ></script>
+<script type="text/javascript" src="../static/kindeditor/lang/zh-CN.js" ></script>
+<style>
+.btn-article-box {
+	margin: 20px 0 20px 0;
+}
+.btn-article-box select {
+	display: inline-block;
+	width: 200px;
+}
+
+</style>
+</head>
+<body>
+	<header>
+		<nav>
+		</nav>
+	</header>
+	<div id="wrapper" class="mid-width center">
+		<h1>添加文章</h1>
+		<form id="editorFormEL" action="addArticle.do">
+			<input class="form-control" name="title" placeholder="文章标题" > 
+			<div class="btn-article-box">
+				<span>选择文章所属分类</span>
+				<select class="form-control" id="select-article-categorys">
+					<option value="no-choice">———未选择———</option>
+				</select>
+				<button class="btn btn-primary" type="submit">提交上传</button>	
+			</div>
+			<textarea name="content" id="editor"></textarea>
+		</form>
+	</div>
+</body>
+<script src="../assets/js/common.js"></script>
+<script src="../assets/js/admin-nav.js"></script>
+<script>
+;+function(window, document, undefined){
+	KindEditor.ready(function(K){
+		window.editor = K.create('#editor', {
+			minWidth: 1024,
+			minHeight: 377,
+			uploadJson: 'uploadFileFromArticle.do',
+			fileManagerJson: 'fileManagerFromArticle.do',
+        	allowFileManager: true,
+        	autoHeightMode: true
+		});
+	});
+	
+	$(document).ready(function(){
+		
+		var init = function(){
+			bindEvents();	
+			loadArticleCategorys();
+		};
+		
+		var bindEvents = function(){
+			$('#editorFormEL').submit(function(evt){
+				evt.preventDefault();
+				var formEL = evt.target;
+				var param = {};
+				param.title = formEL.title.value;
+				param.preview = editor.text().substring(0, 280);
+				param.categoryId = $('#select-article-categorys option:selected').val();
+				param.content = formEL.content.value;
+				$.post(formEL.action, param, function(resp) {
+					alert(resp.message);
+					if(resp.code){
+						tools.codeHandler(resp.code);
+					} else {
+						location.href = 'article-list.html';
+					}
+					
+				});
+			});
+			
+		};
+		
+		var loadArticleCategorys = function(){
+			$.post('loadArticleCategorys.do', null, function(resp) {
+				if (resp.code) {
+					alert(resp.message);
+				} else {
+					addArticleCategoryELs(resp.data);
+				}
+			});
+		};
+		
+		var addArticleCategoryELs = function(categorys) {
+			var selectEL = $('#select-article-categorys');
+			var optionEL;
+			for (var i = 0; i < categorys.length; i++) {
+				optionEL = $('<option value="'+categorys[i].id+'">'+categorys[i].name+'</option>');
+				selectEL.append(optionEL);
+			}
+		};
+		
+		init();
+	});
+	
+}(window, document);
+</script>
+</html>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="priv.tdll.blog.dao.ArticleDao">
+
+	<resultMap type="priv.tdll.blog.entity.ArticleEntity" id="articleEntity" autoMapping="true">
+		<id property="id" column="id" />
+		<result property="addTime" column="add_time" />
+	</resultMap>
+	
+	<resultMap type="priv.tdll.blog.dto.out.ArticlePreview" id="articlePreview" autoMapping="true">
+		<id property="id" column="id" />
+		<result property="addTime" column="add_time" />
+	</resultMap>
+	<resultMap type="priv.tdll.blog.dto.out.ArticleShow" id="article" autoMapping="true">
+		<id property="id" column="id" />
+		<result property="addTime" column="add_time" />
+	</resultMap>
+	
+	
+	
+	<!-- 	
+	public void create(T value) throws Exception;
+	public T retrieve(String id) throws Exception;
+	public void update(T value) throws Exception;
+	public void delete(String id) throws Exception; -->
+	
+	<!-- private String id;
+	private String categoryId;
+	private String title;
+	private String preview;
+	private String content;
+	private long viewTimes;
+	private Date addTime;
+	private Date modifyTime;
+	private int status; -->
+	
+	
+	<insert id="create">
+		insert into article
+			(id, category_id, title, preview, content, 
+			view_times, add_time, modify_time, status) 
+		values
+			(#{id}, #{categoryId}, #{title}, #{preview}, #{content}, 
+			#{viewTimes}, #{addTime}, #{modifyTime}, #{status})
+	</insert>
+	
+	<select id="retrieve" resultMap="articleEntity">
+		select * from article 
+		where `${uf}`=#{value}
+	</select>
+	
+	<select id="queryArticlePreview" resultMap="articlePreview">
+		select id, title, preview, add_time
+		from article
+		where status=1
+		order by add_time desc
+		limit #{start}, #{limit}
+	</select>
+	
+	<select id="queryArticle" resultMap="article">
+		select id, title, content, add_time
+		from article
+		where id=#{id} and status=1
+	</select>
+	
+	<update id="update">
+	
+	</update>
+	
+	<delete id="delete">
+	
+	</delete>
+	
+</mapper>

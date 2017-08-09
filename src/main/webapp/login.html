@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>BOLOG|登录</title>
+<link rel="stylesheet" href="static/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="assets/css/common.css" />
+<script type="text/javascript" src="static/jquery/jquery-3.1.1.min.js" ></script>
+<script type="text/javascript" src="static/bootstrap/js/bootstrap.min.js" ></script>
+<style>
+body {
+	margin: 0;
+	padding: 0;
+	height: 100vh;
+	background-image: url(resource/login-background.jpg);
+	background-position: center top;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+#wrapper {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+}
+.form-container {
+	position: absolute;
+	padding: 20px;
+	border: 1px solid gray;
+	border-radius: 5px;
+	height: 338px;
+	width: 320px;
+	top: 0;
+	bottom: 0;
+	left: 177px;
+	margin: auto;
+	background-color: rgba(255, 255, 255, 0.5);
+}
+.form-container h2{
+	margin: 0 0 20px 0;
+}
+#vc {
+	width: 100px;
+	height: 34px;
+}
+.verify-code-input {
+	width: 120px;
+}
+.verify-code-img {
+	position: absolute;
+	right: 20px;
+	top: 201px;
+}
+#login-tip {
+	font-size: 90%;
+	color: red;
+}
+</style>
+</head>
+<body>
+	<header>
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="index.html">BOLOG</a>
+				</div>
+				<div>
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="register.html"> <span
+								class="glyphicon glyphicon-user"></span> 注册
+						</a></li>
+					</ul>
+				</div>
+		
+			</div>
+		</nav>
+	</header>
+	<div id="wrapper" class="mid-width center">
+		<div class="form-container">
+			<form action="login.do" class="form-horizontal" role="form" novalidate>
+				<h2>登录BOLOG</h2>
+				<span id="login-tip">&nbsp;</span>
+				<div class="input-group">
+					<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+					<input name="account" class="form-control" placeholder="输入账号" >
+				</div>
+				<br>
+				<div class="input-group">
+					<span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+					<input name="password" class="form-control" type="password" placeholder="输入密码" >
+				</div>
+				<br>
+				<input name="verifyCode" class="form-control verify-code-input" placeholder="请输入验证码">
+				<img class="verify-code-img csr-pointer"  onclick="gvc()" id="vc">
+				<br>
+				<label>
+					<input name="remember" type="checkbox">记住登录7天
+				</label>
+				<br>
+				<button type="submit" class="btn btn-block btn-primary">登录</button>
+			</form>
+		</div>
+	</div>
+	
+</body>
+<script>
+;+function(window, document, undefined) {
+	$(document).ready(function(){
+		
+		var init = function(){
+			bindEvents();
+			gvc();
+		};
+		
+		var bindEvents = function(){
+			$('#wrapper form').submit(function(evt){
+				evt.preventDefault();
+				var formEL=evt.target;
+				var param={};
+				param.account=formEL.account.value;
+				param.password=formEL.password.value
+				param.remember=formEL.remember.checked;
+				param.verifyCode=formEL.verifyCode.value;
+				$.post(formEL.action, param, function(resp){
+					if (resp.code) {
+						$('#login-tip').html(resp.message + '（' + resp.code + '）');
+						formEL.verifyCode.value = '';
+						gvc();
+					} else {
+						location.href = 'index.html';
+					}
+				});
+			});
+			
+			$('#wrapper input').on('input propertychange', function(evt){
+				$('#login-tip').html('&nbsp;');
+			});
+			
+			window.gvc = gvc;
+			
+		};
+		
+		var gvc = function(){
+			$('#vc')[0].src='gvc.do?t='+(new Date()).getUTCMilliseconds();
+		};
+		
+		init();
+		
+	});
+	
+}(window, document);
+</script>
+</html>

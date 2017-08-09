@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="priv.tdll.blog.dao.RedisJwtDao">
+
+	<resultMap type="priv.tdll.blog.entity.RedisJwtEntity" id="redisJwtEntity" autoMapping="true" />
+		
+	<!-- 	
+	public void create(T value) throws Exception;
+	public T retrieve(String id) throws Exception;
+	public void update(T value) throws Exception;
+	public void delete(String id) throws Exception; -->
+	
+	<insert id="create">
+		insert into redis_jwt
+			(`key`, `value`)
+		values
+			(#{key}, #{value})
+	</insert>
+	
+	<select id="retrieve" resultMap="redisJwtEntity">
+		select * from redis_jwt
+		where `${uf}`=#{value}
+	</select>
+	
+	<update id="update">
+	
+	</update>
+	
+	<delete id="delete">
+		delete from redis_jwt
+		where `${uf}`=#{value}
+	</delete>
+	
+</mapper>

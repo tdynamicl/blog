@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>BOLOG|文章收藏</title>
+<link rel="stylesheet" href="static/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="assets/css/common.css" />
+<script type="text/javascript" src="static/jquery/jquery-3.1.1.min.js" ></script>
+<script type="text/javascript" src="static/bootstrap/js/bootstrap.min.js" ></script>
+</head>
+<body>
+	<header></header>
+	<div id="wrapper" class="mid-width center">
+				
+	</div>
+	<footer>
+	
+	</footer>
+</body>
+<script src="assets/js/common.js"></script>
+<script src="assets/js/nav.js"></script>
+<script src="assets/js/footer.js"></script>
+<script>
+;+function(window, document, undefined){
+	var currPageIndex = 1;
+	
+	$(document).ready(function(){
+		var init = function() {
+			bindEvents();
+			loadArticle();
+		};
+		
+		var bindEvents = function() {
+			
+		};
+		
+		var loadArticle = function() {
+			var param = {};
+			param.index = currPageIndex;
+			$.post('loadArticlePreview.do', param, function(resp){
+				if (resp.code) {
+					
+				} else {
+					showArticle(resp.data);
+				}
+			});
+		};
+		
+		var showArticle = function(data) {
+			var contentEL = $('#wrapper');
+			for (var i = 0; i < data.length; i++) {
+				var articleEL = $('<article class="article-container">'+
+					'	<h2 class="article-title"><a href="article.html?id='+data[i].id+'">'+data[i].title+'</a></h2>'+
+					'	<div class="article-meta-box">'+
+					'		<span class="glyphicon glyphicon-calendar">'+
+					'		</span><span class="m-article-date">'+ (new Date(data[i].addTime)) +'</span><span class="glyphicon glyphicon-comment">'+
+					'		</span><span class="m-comment-link">查看评论</span>'+
+					'	</div><p>'+data[i].preview+'</p></article>');
+				articleEL.find('img').remove();
+				contentEL.append(articleEL);
+			}
+		}
+		
+		init();
+	});
+	
+}(window, document);
+</script>
+</html>

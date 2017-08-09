@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>BOLOG（管理端）|首页</title>
+<link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../assets/css/common.css" />
+<script type="text/javascript" src="../static/jquery/jquery-3.1.1.min.js" ></script>
+<script type="text/javascript" src="../static/bootstrap/js/bootstrap.min.js" ></script>
+<style>
+#wrapper {
+	position: relative;
+}
+leftbar {
+	position: absolute;
+	width: 20%;
+	left: 0;
+	top: 0;
+}
+main {
+	position: absolute;
+	width: 80%;
+	left: 20%;
+}
+main>nav {
+	height: 35px;
+	line-height: 35px;
+	border-bottom: 1px solid #e7e7e7;
+	background-color: #f8f8f8;
+	padding: 0 0 0 20px;
+}
+leftbar .menu {
+	margin: 0;
+	padding: 0;
+	border-bottom: none;
+	border: 1px solid #cfcfcf;
+}
+leftbar .menu li {
+	font-family: "微软雅黑";
+	font-size: 120%;
+	margin: 0;
+	padding-left: 15px;
+	height: 35px;
+	line-height: 35px;
+	cursor: pointer;
+	list-style-type: none;
+	background-color: #dddddd;
+	border-bottom: 1px solid #cfcfcf;
+}
+leftbar .menu li:hover {
+	background-color: #ededed;
+}
+main {
+
+}
+</style>
+</head>
+<body hidden="true">
+	<header>
+	</header>
+	<div id="wrapper" class="mid-width center">
+		<leftbar>
+			<ul class="menu">
+				<li onclick="javascript:location.href='article-list.html';"><span class="glyphicon glyphicon-file"></span> 文章管理</li>
+				<li><span class="glyphicon glyphicon-picture"></span> 图片管理</li>
+			</ul>
+		</leftbar>
+		<main>
+			<nav>
+			<a href="index.html"><span class="glyphicon glyphicon-home"></span> 首页</a>
+			</nav>
+			<h3>welcome to xxx</h3>
+		
+		
+		</main>
+	</div>
+	<footer>
+		
+	</footer>
+</body>
+<script src="../assets/js/common.js"></script>
+<script src="../assets/js/admin-nav.js"></script>
+</html>

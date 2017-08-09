@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>BOLOG|查看文章</title>
+<link rel="stylesheet" href="static/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="assets/css/common.css" />
+<link rel="stylesheet" href="assets/css/show-article.css" />
+<script type="text/javascript" src="static/jquery/jquery-3.1.1.min.js" ></script>
+<script type="text/javascript" src="static/bootstrap/js/bootstrap.min.js" ></script>
+<script type="text/javascript" src="static/google-code-prettify/prettify.js" ></script>
+<link rel="stylesheet" href="static/google-code-prettify/prettify.css" />
+<style>
+#article-container img {
+	max-height: 300px;
+}
+</style>
+</head>
+<body>
+<body>
+	<header>
+		<!-- jquery填充nav.js -->
+	</header>
+	<div id="wapper" class="mid-width center">
+		<h1 id="title"></h1>
+		<div id="article-container">
+			<!-- jquery填充 -->
+		</div>
+	</div>
+	<footer>
+		<!-- jquery填充 -->
+	</footer>
+</body>
+<script src="assets/js/common.js"></script>
+<script src="assets/js/nav.js"></script>
+<script src="assets/js/footer.js"></script>
+<script>
+;+function(window, document, undefined){
+$(document).ready(function(){
+	
+	var init = function(){
+		// 主要功能
+		main();
+	};
+	
+	var main = function(){
+		var id = tools.getQueryString('id');
+		if (id===null) {
+			location.href='index.html';
+		}
+		// 获取文章内容
+		var param = {};
+		param.id = id;
+		$.post('loadArticle.do', param, function(resp){
+			if (resp.code) {
+				alert(resp.message);
+			} else {
+				$('#title').html(resp.data.title);
+				$('#article-container').html(resp.data.content);
+				$('#article-container pre').addClass('linenums');
+				prettyPrint();
+			}
+			
+		});
+	};
+	
+	init();
+	
+});
+}(window, document);
+</script>
+</html>

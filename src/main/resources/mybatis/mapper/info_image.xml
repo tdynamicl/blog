@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="priv.tdll.blog.dao.InfoImageDao">
+
+	<resultMap type="priv.tdll.blog.entity.InfoImageEntity" id="infoImageEntity" autoMapping="true">
+		<id property="id" column="id" />
+		<result property="addTime" column="add_time" />
+	</resultMap>
+	
+	<!-- 	
+	public void create(T value) throws Exception;
+	public T retrieve(String id) throws Exception;
+	public void update(T value) throws Exception;
+	public void delete(String id) throws Exception; -->
+	
+	<insert id="create">
+		insert into info_image
+		(`id`, `title`, `description`, `path`, `add_time`) values 
+		(#{id}, #{title}, #{description}, #{path}, #{addTime})
+	</insert>
+	
+	<select id="retrieve" resultMap="infoImageEntity">
+
+	</select>
+	
+	<update id="update">
+	
+	</update>
+	
+	<delete id="delete">
+	
+	</delete>
+	
+</mapper>

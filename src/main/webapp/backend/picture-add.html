@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>xxx|首页（管理端）</title>
+<script src="../assets/js/lib/jquery-3.1.1.min.js"></script>
+<script src="../assets/js/lib/bootstrap.min.js"></script>
+<link rel="stylesheet" href="../assets/css/lib/bootstrap.min.css" />
+</head>
+<body>
+	<header>
+		<nav class="navbar navbar-default" role="navigation">
+		
+		</nav>
+	</header>
+	<div id="wrapper">
+		<h1>welcome to xxx</h1>
+		<form id="uploadImageFormEL" enctype="multipart/form-data">
+			<input name="title">
+			<input name="description">
+			<input name="file" type="file">
+			<button type="submit">上传</button>
+		</form>
+		
+		<div>
+			<img src="..\resource\image\profileicon.jpg">
+		
+		</div>
+	</div>
+	<footer>
+	
+	</footer>
+</body>
+<script>
+;+function(window, document, undefined){
+	$(document).ready(function(){
+	
+		var init = function(){
+			bindEvents();
+		};
+		
+		var bindEvents = function(){
+			$('#uploadImageFormEL').submit(function(evt){
+				evt.preventDefault();
+				var formEL=evt.target;
+				var imgPath = $(formEL.file).val();
+				if (imgPath == '') {
+					alert('请选择图骗');
+					return;
+				}
+				$.ajax({
+			        type: 'POST',
+			        url: 'uploadImage.do',
+			        cache: false,
+			        data: new FormData($('#uploadImageFormEL')[0]),
+			        processData: false,
+			        contentType: false,
+			        dataType:'json',
+			        beforeSend: function(){
+			            //uploading = true;
+			        },
+			        success : function(resp) {
+			            console.log(resp);
+			            //uploading = false;
+			        }
+			    });
+				
+			});
+			
+			
+		};
+		
+		init();
+	});
+	
+}(window, document);
+</script>
+
+</html>

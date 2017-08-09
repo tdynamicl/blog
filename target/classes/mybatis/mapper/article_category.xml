@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="priv.tdll.blog.dao.ArticleCategoryDao">
+
+	<resultMap type="priv.tdll.blog.entity.ArticleCategoryEntity" id="articleCategoryEntity" autoMapping="true">
+		<id property="id" column="id" />
+	</resultMap>
+	
+	<!-- 	
+	public void create(T value) throws Exception;
+	public T retrieve(String id) throws Exception;
+	public void update(T value) throws Exception;
+	public void delete(String id) throws Exception; 
+	-->
+	
+	<insert id="create">
+		insert into article_category
+			(id, name) 
+		values
+			(#{id}, #{name})
+	</insert>
+	
+	<select id="retrieve" resultMap="articleCategoryEntity">
+		select * from article_category
+		where `${uf}`=#{value}
+	</select>
+	
+	<select id="queryAll" resultMap="articleCategoryEntity">
+		select * from article_category
+	</select>
+	
+	<update id="update">
+	
+	</update>
+	
+	<delete id="delete">
+	
+	</delete>
+	
+</mapper>
